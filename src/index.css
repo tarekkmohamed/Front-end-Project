@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+  --first-color: #819A91;
+  --second-color: #A7C1A8;
+  --third-color: #D1D8BE;
+  --fourth-color: #EEEFE0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+
+  a {
+    text-decoration: none !important;
+    list-style: none !important;
+  }
+}
+
+.home-container {
+  padding: 30px;
+
+  h1 {
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 60px;
+  }
+}
+
+.productDetails-layout {
+  padding: 30px;
+
+  .header{
+    display: flex;
+    align-items: center;
+
+    h1 {
+      margin-bottom: 30px;
+      margin: auto;
+    }
+    span{
+      font-size: 30px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+  }
+
+  .single-product {
+    padding: 60px;
+    display: flex;
+    gap: 40px;
+
+    .image {
+      width: 20%;
+
+      img {
+        display: block;
+        width: 100%;
+        max-width: 600px !important;
+      }
+    }
+
+    .text-container {
+      flex: 1;
+      padding: 10px;
+
+      h2 {
+        margin-bottom: 10px;
+      }
+
+      .shape-container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        margin: 10px 0;
+        flex-wrap: wrap;
+
+        p {
+          border-radius: 20px;
+          padding: 12px 20px;
+          text-transform: capitalize;
+          font-weight: bold;
+          width: fit-content;
+          margin: auto;
+        }
+      }
+
+      .cart-button {
+        text-align: center;
+
+        .css-74d805-MuiButtonBase-root-MuiButton-root {
+          color: white;
+          background-color: #DC3C22;
+          font-weight: bold;
+          width: 100%;
+          border-radius: 10px;
+
+          &:hover {
+            opacity: 80%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width : 811px) {
+  .single-product {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image {
+    width: 100% !important;
+  }
+
+  .nav-bar {
+    width: fit-content;
+  }
+}
+
+@media screen and (max-width : 930px) {
+  .nav-bar {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    h1 {
+      font-size: 20px;
+    }
+  }
+}

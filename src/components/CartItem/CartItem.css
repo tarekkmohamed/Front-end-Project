@@ -1,0 +1,96 @@
+.cart-layout {
+    padding: 30px;
+    height: calc(100vh - 84px);
+    h1 {
+        margin-bottom: 30px;
+    }
+
+    .single-cart {
+        padding: 60px;
+        display: flex;
+        gap: 30px;
+
+        .image {
+            width: 60%;
+            img {
+                display: block;
+                width: 100%;
+                max-width: 600px !important;
+            }
+        }
+
+        .text-container {
+            /* flex: 1; */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            h2 {
+                margin-bottom: 10px;
+            }
+
+            .shape-container {
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+                margin: 10px 0;
+                flex-wrap: wrap;
+
+                p {
+                    border-radius: 20px;
+                    padding: 12px 20px;
+                    text-transform: capitalize;
+                    font-weight: bold;
+                    width: fit-content;
+                    margin: auto;
+                }
+            }
+
+            .cart-button {
+                text-align: center;
+
+                .css-74d805-MuiButtonBase-root-MuiButton-root {
+                    color: white;
+                    background-color: #DC3C22;
+                    font-weight: bold;
+                    width: 100%;
+                    border-radius: 10px;
+
+                    &:hover {
+                        opacity: 80%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width : 811px) {
+  .single-product {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image {
+    width: 100% !important;
+  }
+
+  .nav-bar {
+    width: fit-content;
+  }
+}
+
+@media screen and (max-width : 930px) {
+  .nav-bar {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    h1 {
+      font-size: 20px;
+    }
+  }
+}

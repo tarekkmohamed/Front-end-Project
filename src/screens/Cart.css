@@ -1,0 +1,31 @@
+.nav-bar{
+  padding: 10px 60px !important;
+}
+h1 {
+  padding: 15px;
+}
+.cart-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 25px !important;
+  height: 100% !important;
+}
+.empty-cart-layout{
+  display: flex;
+  width: 100%;
+  height: calc(689.6px - 84px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .empty-cart{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    padding: 30px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+}
