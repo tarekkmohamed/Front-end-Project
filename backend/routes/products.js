@@ -16,15 +16,17 @@ const router = express.Router();
 // Public routes
 router.get('/', getProducts);
 router.get('/featured/top', getFeaturedProducts);
-router.get('/:id', getProductById);
 
 // Protected routes
 router.post('/:id/reviews', protect, addProductReview);
 
-// Seller/Admin routes
+// Seller/Admin routes - specific routes before parameterized routes
+router.get('/seller/my-products', protect, seller, getSellerProducts);
 router.post('/', protect, seller, createProduct);
 router.put('/:id', protect, seller, updateProduct);
 router.delete('/:id', protect, seller, deleteProduct);
-router.get('/seller/my-products', protect, seller, getSellerProducts);
+
+// Parameterized route must come after specific routes
+router.get('/:id', getProductById);
 
 export default router;
