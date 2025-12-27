@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db import transaction
+import logging
 
 from .models import ShippingAddress, Order, OrderItem
 from .serializers import (
@@ -13,6 +14,8 @@ from .serializers import (
 )
 from cart.models import Cart
 from users.utils.email import send_order_confirmation_email
+
+logger = logging.getLogger(__name__)
 
 
 class ShippingAddressListCreateView(generics.ListCreateAPIView):
@@ -100,8 +103,10 @@ class OrderCreateView(APIView):
         for cart_item in cart.items.all():
             # Check stock
             if cart_item.product.stock_quantity < cart_item.quantity:
-                # Rollback transaction
-                raise Exception(f'Insufficient stock for {cart_item.product.title}')
+                # Return error response instead of raising exception
+                return Response({
+                    'error': f'Insufficient stock for {cart_item.product.title}. Only {cart_item.product.stock_quantity} available.'
+                }, status=status.HTTP_400_BAD_REQUEST)
             
             # Create order item
             OrderItem.objects.create(
@@ -123,7 +128,7 @@ class OrderCreateView(APIView):
         try:
             send_order_confirmation_email(order)
         except Exception as e:
-            print(f"Error sending order confirmation email: {e}")
+            logger.error(f"Error sending order confirmation email: {e}")
         
         order_serializer = OrderSerializer(order)
         return Response({

@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 import uuid
+import logging
 
 from .serializers import (
     UserRegistrationSerializer,
@@ -17,6 +18,7 @@ from .serializers import (
 from .utils.email import send_activation_email, send_password_reset_email
 
 User = get_user_model()
+logger = logging.getLogger(__name__)
 
 
 class UserRegistrationView(generics.CreateAPIView):
@@ -34,7 +36,7 @@ class UserRegistrationView(generics.CreateAPIView):
             send_activation_email(user, user.activation_token)
         except Exception as e:
             # Log error but don't fail registration
-            print(f"Error sending activation email: {e}")
+            logger.error(f"Error sending activation email: {e}")
         
         return Response({
             'message': 'User registered successfully. Please check your email to activate your account.',
@@ -129,11 +131,17 @@ class LogoutView(APIView):
             refresh_token = request.data.get('refresh_token')
             if refresh_token:
                 token = RefreshToken(refresh_token)
-                token.blacklist()
+                # Try to blacklist the token if the feature is enabled
+                try:
+                    token.blacklist()
+                except AttributeError:
+                    # Blacklist feature not enabled, token will expire naturally
+                    pass
             return Response({
                 'message': 'Logout successful.'
             }, status=status.HTTP_200_OK)
         except Exception as e:
+            logger.error(f"Error during logout: {e}")
             return Response({
                 'error': 'Invalid token.'
             }, status=status.HTTP_400_BAD_REQUEST)
@@ -160,7 +168,7 @@ class PasswordResetRequestView(generics.GenericAPIView):
             try:
                 send_password_reset_email(user, user.reset_password_token)
             except Exception as e:
-                print(f"Error sending password reset email: {e}")
+                logger.error(f"Error sending password reset email: {e}")
         except User.DoesNotExist:
             # Don't reveal if email exists (security best practice)
             pass
